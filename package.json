@@ -1,0 +1,46 @@
+{
+  "name": "der-autor",
+  "version": "0.1.0",
+  "description": "AI book-writing desktop app — from world idea to spoiler-free FB2",
+  "main": "out/main/index.js",
+  "author": "RightTech",
+  "license": "UNLICENSED",
+  "private": true,
+  "build": {
+    "appId": "nz.co.righttech.derautor",
+    "productName": "derAutor",
+    "directories": { "buildResources": "build" },
+    "files": ["out/**/*"],
+    "win": { "icon": "build/icon.ico" }
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "test": "vitest run",
+    "package": "electron-vite build && electron-builder --win"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.201",
+    "@anthropic-ai/sdk": "^0.110.0",
+    "openai": "^6.45.0",
+    "xmlbuilder2": "^4.0.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "^43.0.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "typescript": "^6.0.3",
+    "vite": "^7.3.6",
+    "vitest": "^4.1.9",
+    "zustand": "^5.0.14"
+  }
+}
