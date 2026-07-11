@@ -1,6 +1,6 @@
 {
   "name": "der-autor",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "AI book-writing desktop app — from world idea to spoiler-free FB2",
   "main": "out/main/index.js",
   "author": "RightTech",

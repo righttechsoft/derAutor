@@ -11,6 +11,14 @@ const PRESET_LANGUAGES: Array<{ code: string; label: string }> = [
   { code: 'es', label: 'Spanish' }
 ]
 
+const BOOK_SIZES: Array<{ words: number; label: string }> = [
+  { words: 30000, label: 'Novella' },
+  { words: 60000, label: 'Short novel' },
+  { words: 90000, label: 'Standard novel' },
+  { words: 120000, label: 'Long novel' },
+  { words: 150000, label: 'Epic' }
+]
+
 export function NewProjectWizard(): React.JSX.Element {
   const createProject = useStore((s) => s.createProject)
   const goHome = useStore((s) => s.goHome)
@@ -83,37 +91,31 @@ export function NewProjectWizard(): React.JSX.Element {
     <div className="screen">
       <TopBar title="New Book" subtitle="Describe the world; the AI takes it from there." onBack={() => void goHome()} />
 
-      <div className="screen-body narrow">
-        <div className="card form-card">
-          {doneProjects.length > 0 && (
-            <label className="field">
-              <span className="field-label">Continue an existing world</span>
-              <select className="input" value={sourceId} onChange={(e) => pickSource(e.target.value)}>
-                <option value="">No — start a fresh world</option>
-                {doneProjects.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.title || 'Untitled'}
-                  </option>
-                ))}
-              </select>
-              <span className="field-hint">
-                The new book inherits the world of a finished book, including everything that
-                changed in it. To translate a finished book, open it and use “Translate”.
-              </span>
-            </label>
-          )}
-
-          <label className="field">
-            <span className="field-label">Title</span>
-            <input
-              className="input"
-              value={title}
-              placeholder="Working title for your book"
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </label>
-
+      <div className="screen-body">
+        <div className="card form-card form-card-fill">
           <div className="field-row">
+            {doneProjects.length > 0 && (
+              <label className="field">
+                <span className="field-label">Continue an existing world</span>
+                <select className="input" value={sourceId} onChange={(e) => pickSource(e.target.value)}>
+                  <option value="">No — start a fresh world</option>
+                  {doneProjects.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.title || 'Untitled'}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            <label className="field field-wide">
+              <span className="field-label">Title</span>
+              <input
+                className="input"
+                value={title}
+                placeholder="Working title for your book"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </label>
             <label className="field">
               <span className="field-label">Language</span>
               <select className="input" value={langChoice} onChange={(e) => setLangChoice(e.target.value)}>
@@ -136,29 +138,35 @@ export function NewProjectWizard(): React.JSX.Element {
                 />
               </label>
             )}
-          </div>
-
-          <div className="field-row">
             <label className="field">
               <span className="field-label">Target length</span>
-              <input
-                className="input"
-                type="number"
-                min={1000}
-                step={1000}
-                list="book-sizes"
-                value={targetWords}
-                onChange={(e) => setTargetWords(Number(e.target.value))}
-              />
-              <datalist id="book-sizes">
-                <option value="30000" label="Novella" />
-                <option value="60000" label="Short novel" />
-                <option value="90000" label="Standard novel" />
-                <option value="120000" label="Long novel" />
-                <option value="150000" label="Epic" />
-              </datalist>
+              <div className="input-inline">
+                <select
+                  className="input"
+                  value={BOOK_SIZES.some((s) => s.words === targetWords) ? targetWords : ''}
+                  onChange={(e) => setTargetWords(Number(e.target.value))}
+                >
+                  {!BOOK_SIZES.some((s) => s.words === targetWords) && <option value="">Custom</option>}
+                  {BOOK_SIZES.map((s) => (
+                    <option key={s.words} value={s.words}>
+                      {s.label} — {s.words.toLocaleString()} words
+                    </option>
+                  ))}
+                </select>
+                <input
+                  className="input input-narrow"
+                  type="number"
+                  min={1000}
+                  step={1000}
+                  value={targetWords}
+                  onChange={(e) => setTargetWords(Number(e.target.value))}
+                />
+              </div>
               <span className="field-hint">≈ {chapters} chapters</span>
             </label>
+          </div>
+
+          <div className="field-row field-row-compact">
             <label className="field">
               <span className="field-label">Genre hint</span>
               <input
@@ -168,82 +176,81 @@ export function NewProjectWizard(): React.JSX.Element {
                 onChange={(e) => setGenreHint(e.target.value)}
               />
             </label>
+
+            <label className="field field-toggle">
+              <span>
+                <span className="field-label">Illustrations</span>
+                <span className="field-hint">Generate images for the finished book.</span>
+              </span>
+              <button
+                type="button"
+                className={`toggle ${illustrations ? 'toggle-on' : ''}`}
+                role="switch"
+                aria-checked={illustrations}
+                onClick={() => setIllustrations((v) => !v)}
+              >
+                <span className="toggle-knob" />
+              </button>
+            </label>
+
+            <label className="field field-toggle">
+              <span>
+                <span className="field-label">Guided mode</span>
+                <span className="field-hint">Co-write: approve, regenerate, edit or chat at every step.</span>
+              </span>
+              <button
+                type="button"
+                className={`toggle ${guided ? 'toggle-on' : ''}`}
+                role="switch"
+                aria-checked={guided}
+                onClick={() => setGuided((v) => !v)}
+              >
+                <span className="toggle-knob" />
+              </button>
+            </label>
           </div>
 
-          <label className="field field-toggle">
-            <span>
-              <span className="field-label">Illustrations</span>
-              <span className="field-hint">Generate images for the finished book.</span>
-            </span>
-            <button
-              type="button"
-              className={`toggle ${illustrations ? 'toggle-on' : ''}`}
-              role="switch"
-              aria-checked={illustrations}
-              onClick={() => setIllustrations((v) => !v)}
-            >
-              <span className="toggle-knob" />
-            </button>
-          </label>
-
-          <label className="field field-toggle">
-            <span>
-              <span className="field-label">Guided mode</span>
-              <span className="field-hint">
-                Co-write: see every step live and approve, regenerate, edit or chat to refine it
-                before the book continues.
+          <div className="field-row field-row-fill">
+            <label className="field">
+              <span className="field-label">
+                {sourceId ? 'What is new or changed since the previous book (optional)' : 'Describe your world'}
               </span>
-            </span>
-            <button
-              type="button"
-              className={`toggle ${guided ? 'toggle-on' : ''}`}
-              role="switch"
-              aria-checked={guided}
-              onClick={() => setGuided((v) => !v)}
-            >
-              <span className="toggle-knob" />
-            </button>
-          </label>
+              <textarea
+                className="input textarea"
+                rows={4}
+                value={worldInput}
+                placeholder={
+                  sourceId
+                    ? 'Time skips, new regions, shifted powers… anything the inherited world should account for.'
+                    : 'The setting, its rules, tone, and anything that makes it feel real.'
+                }
+                onChange={(e) => setWorldInput(e.target.value)}
+              />
+            </label>
 
-          <label className="field">
-            <span className="field-label">
-              {sourceId ? 'What is new or changed since the previous book (optional)' : 'Describe your world'}
-            </span>
-            <textarea
-              className="input textarea"
-              rows={6}
-              value={worldInput}
-              placeholder={
-                sourceId
-                  ? 'Time skips, new regions, shifted powers… anything the inherited world should account for.'
-                  : 'The setting, its rules, tone, and anything that makes it feel real.'
-              }
-              onChange={(e) => setWorldInput(e.target.value)}
-            />
-          </label>
+            <label className="field">
+              <span className="field-label">Where does the story start?</span>
+              <textarea
+                className="input textarea"
+                rows={4}
+                value={premiseInput}
+                placeholder="The opening situation or premise. Optional — leave the door open if you like."
+                onChange={(e) => setPremiseInput(e.target.value)}
+              />
+            </label>
 
-          <label className="field">
-            <span className="field-label">Where does the story start?</span>
-            <textarea
-              className="input textarea"
-              rows={4}
-              value={premiseInput}
-              placeholder="The opening situation or premise. Optional — leave the door open if you like."
-              onChange={(e) => setPremiseInput(e.target.value)}
-            />
-          </label>
-
-          <label className="field">
-            <span className="field-label">Style (optional)</span>
-            <textarea
-              className="input textarea"
-              rows={3}
-              value={styleInput}
-              placeholder="How it should be written — e.g. “funny fantasy, concise, only words starting with A” or “lyrical, present tense, short sentences.”"
-              onChange={(e) => setStyleInput(e.target.value)}
-            />
-            <span className="field-hint">Shapes the narrative voice and prose rules for the whole book.</span>
-          </label>
+            <label className="field">
+              <span className="field-label">Style (optional)</span>
+              <textarea
+                className="input textarea"
+                rows={4}
+                value={styleInput}
+                placeholder="How it should be written — e.g. “funny fantasy, concise, only words starting with A” or “lyrical, present tense, short sentences.”"
+                onChange={(e) => setStyleInput(e.target.value)}
+              />
+              <span className="field-hint">Shapes the narrative voice and prose rules for the whole book.</span>
+            </label>
+          </div>
 
           {error && <div className="banner banner-error">{error}</div>}
 

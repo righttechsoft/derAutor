@@ -442,6 +442,56 @@ body {
 .field-row .field {
   flex: 1;
 }
+/* Wizard fills the viewport so the writing fields can grow to the bottom. */
+.form-card-fill {
+  flex: 1;
+  min-height: 0;
+}
+/* Three big writing fields side by side on desktop; wrap on narrow windows. */
+.field-row-fill {
+  align-items: stretch;
+  flex-wrap: nowrap;
+  flex: 1;
+  min-height: 0;
+}
+.field-row-fill .field {
+  min-height: 0;
+}
+.field-row-fill .field {
+  min-width: 260px;
+}
+.field-row-fill .textarea {
+  flex: 1;
+}
+.field-row .field-wide {
+  flex: 2;
+}
+/* Length preset + exact count on one line. */
+.input-inline {
+  display: flex;
+  gap: 0.5rem;
+}
+.input-inline .input {
+  flex: 1;
+}
+.input-narrow {
+  flex: 0 0 110px !important;
+}
+/* Genre + toggles packed left at natural width, not stretched full-width. */
+.field-row-compact {
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem 2rem;
+}
+.field-row-compact > .field {
+  flex: 0 0 auto;
+}
+.field-row-compact > .field:not(.field-toggle) {
+  width: 260px;
+}
+.field-row-compact > .field-toggle {
+  min-width: 240px;
+}
 .input {
   width: 100%;
   background: var(--panel-2);
