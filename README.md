@@ -64,7 +64,7 @@ Everything after *clarify* runs hidden. You just wait.
 - **Electron + TypeScript**, React + zustand renderer, all state in **SQLite** (`node:sqlite` — no native modules, no rebuild pain).
 - Three interchangeable AI backends: the **Anthropic API**, your **Claude subscription** (via the Agent SDK), or a fully offline **mock pipeline** for testing.
 - Every step is **checkpointed** — kill the app mid-book, reopen it, and it resumes exactly where it left off without paying for a single duplicate call.
-- Illustrations via **gpt-image-1**, style-anchored to the cover.
+- Illustrations via **gpt-image-2**, style-anchored to the cover.
 
 ## Get it
 

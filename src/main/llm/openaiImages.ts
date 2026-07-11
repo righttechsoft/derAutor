@@ -43,7 +43,7 @@ export async function generateImage(req: ImageRequest): Promise<GeneratedImage> 
   if (req.styleAnchor) {
     const result = await client.images.edit(
       {
-        model: 'gpt-image-1',
+        model: 'gpt-image-2',
         image: await toFile(req.styleAnchor, 'style-anchor.jpg', { type: 'image/jpeg' }),
         prompt: `Use the attached image ONLY as an art-style reference (palette, linework, rendering). Depict a new scene: ${req.prompt}`,
         size,
@@ -56,7 +56,7 @@ export async function generateImage(req: ImageRequest): Promise<GeneratedImage> 
   } else {
     const result = await client.images.generate(
       {
-        model: 'gpt-image-1',
+        model: 'gpt-image-2',
         prompt: req.prompt,
         size,
         quality: req.quality,
@@ -66,6 +66,6 @@ export async function generateImage(req: ImageRequest): Promise<GeneratedImage> 
     )
     b64 = result.data?.[0]?.b64_json
   }
-  if (!b64) throw new Error('gpt-image-1 returned no image data')
+  if (!b64) throw new Error('gpt-image-2 returned no image data')
   return { jpeg: Buffer.from(b64, 'base64'), width, height, costUsd: imageCostUsd(req.quality) }
 }

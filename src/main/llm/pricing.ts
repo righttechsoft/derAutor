@@ -32,7 +32,7 @@ export function computeCostUsd(
   )
 }
 
-/** Approximate gpt-image-1 cost per image by quality (portrait/landscape 1536px edge). */
+/** Approximate gpt-image-2 cost per image by quality (portrait/landscape 1536px edge, rounded up for edit input-token overhead). */
 export function imageCostUsd(quality: 'low' | 'medium' | 'high'): number {
-  return quality === 'high' ? 0.25 : quality === 'medium' ? 0.07 : 0.02
+  return quality === 'high' ? 0.2 : quality === 'medium' ? 0.05 : 0.01
 }

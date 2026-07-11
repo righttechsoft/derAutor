@@ -303,7 +303,7 @@ export function ExportScreen(): React.JSX.Element {
             <div>
               <h3 className="panel-title">Add illustrations</h3>
               <p className="muted">
-                Paint a style-locked cover and one image per chapter (gpt-image-1), then re-export.
+                Paint a style-locked cover and one image per chapter (gpt-image-2), then re-export.
               </p>
               {settings && !settings.openaiKeySet && (
                 <p className="muted" style={{ color: 'var(--amber)' }}>

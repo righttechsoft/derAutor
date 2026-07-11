@@ -55,5 +55,5 @@ xmlbuilder2; xlink namespace mandatory for `<image l:href>`; title-info element 
 - Version pins: `vite@^7` + `@vitejs/plugin-react@^5` (electron-vite 5 rejects vite 8). TS 6: no `baseUrl` (use relative `paths`). React 19: no global `JSX` namespace.
 - The packaged app's userData is `%APPDATA%\der-autor` (package.json `name`), not `derAutor`.
 - `updateProject` builds SQL from a typed field allowlist — extend the Pick<> when adding columns.
-- OpenAI gpt-image-1 (`openaiImages.ts`): jpeg native output (no sharp), cover = style anchor for all chapter images via `images.edit`. OpenAI's edge throws transient 520/`terminated` — engine retries cover it.
+- OpenAI gpt-image-2 (`openaiImages.ts`): jpeg native output (no sharp), cover = style anchor for all chapter images via `images.edit`. OpenAI's edge throws transient 520/`terminated` — engine retries cover it.
 - Tests live under `tests/`; the e2e suite asserts zero duplicate llm_calls after kill-and-resume — any hash instability breaks it first.

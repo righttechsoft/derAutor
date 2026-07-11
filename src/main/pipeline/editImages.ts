@@ -25,7 +25,7 @@ import { imagePromptUser } from './prompts'
 function imageUsage(costUsd: number, durationMs: number): LlmUsage {
   return {
     provider: 'openai',
-    model: 'gpt-image-1',
+    model: 'gpt-image-2',
     inputTokens: 0,
     outputTokens: 0,
     cacheReadTokens: 0,
