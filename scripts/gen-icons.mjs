@@ -55,9 +55,11 @@ function buildIco(pngs) {
 }
 
 const ico = buildIco(frames)
+// electron-builder requires the mac/linux source png to be >= 512x512.
+const png512 = await sharp(square).resize(512, 512).png({ compressionLevel: 9 }).toBuffer()
 mkdirSync('build', { recursive: true })
 mkdirSync('resources', { recursive: true })
 writeFileSync('resources/icon.ico', ico)
 writeFileSync('build/icon.ico', ico)
-writeFileSync('resources/icon.png', frames[frames.length - 1]) // 256px
-console.log('wrote icon.ico (' + SIZES.join(',') + ') + icon.png 256')
+writeFileSync('resources/icon.png', png512)
+console.log('wrote icon.ico (' + SIZES.join(',') + ') + icon.png 512')
