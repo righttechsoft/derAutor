@@ -6,13 +6,6 @@
   "author": "RightTech",
   "license": "UNLICENSED",
   "private": true,
-  "build": {
-    "appId": "nz.co.righttech.derautor",
-    "productName": "derAutor",
-    "directories": { "buildResources": "build" },
-    "files": ["out/**/*"],
-    "win": { "icon": "build/icon.ico" }
-  },
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build",
